@@ -1,5 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="pcStylesheet.css"></head>
+<body>
 
-
+<h1><img src="projectPriceFetcher.png" height="100px"></h1>
 
 
 <?php
@@ -14,19 +18,24 @@
 //     echo $node->getNodePath() . "\n";
 // }
 
-echo '<html>
-<body>
-
+echo '
 <form action="amazon.php" method="post">
-Enter url: <input type="text" name="link">
-<br \>
-Enter email: <input type="text" name="email">
-<br \>
-<input type="submit">
+	<table>
+  		<tr>
+			<th>Enter url: </th>
+			<td><input type="text" name="link" placeholder="http://www.amazon.com/dp/B00SRMTY6O" ></td>
+		</tr>
+		<tr>
+			<th>Enter email: </th>
+			<td><input type="text" name="email" placeholder="123@gmail.com"></td>
+		</tr>
+	</table>
+
+</br>
+	<input type="submit" id="i01">
 </form>
 
-</body>
-</html>';
+';
 
 // $dom = new DOMDocument;
 // $dom->loadXML($_POST['link']);
@@ -64,12 +73,24 @@ $sql_weblinks = 'INSERT INTO webLinks (link, email,timestamp) VALUES (\''.$_POST
 // $sql_weblinks .= 'INSERT INTO webLinks (email) VALUES (\''.$_POST['email'].'\')';
 // echo $sql_weblinks;
 
-if ($conn->query($sql_weblinks) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
+// if ($conn->query($sql_weblinks) === TRUE) {
+//     echo "New record created successfully";
+// } else {
+//     echo "Error: " . $sql . "<br>" . $conn->error;
+// }
 echo '<br>';
+echo '<br>';
+echo '<br>';
+echo '<br>';
+echo '<br>';
+echo '<br>';
+echo "Records on file:";
+echo "<table id=\"t01\">
+  <tr>
+    <th>url</th>
+    <th>price</th>		
+    <th>last updated</th>
+  </tr>";
 
 $sql = "SELECT * FROM price;";
 // echo $sql;
@@ -79,12 +100,17 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "url:".$row["link"]."    price:".$row["curPrice"]."    time:".$row["timestamp"]. "<br>";
+        echo "<tr><td>".$row["link"]."</td><td>".$row["curPrice"]."</td><td>".$row["timestamp"]. "</td></tr>";
     }
 } else {
     echo "0 results";
 }
+
+echo "</table>";
 $conn->close();
 
 
 ?>
+
+</body>
+</html>
